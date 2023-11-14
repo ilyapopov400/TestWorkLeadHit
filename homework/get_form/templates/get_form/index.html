@@ -2,4 +2,10 @@
 
 {% block title %} get_form {% endblock %}
 
-{% block content %} TODO {% endblock %}
+{% block content %}
+<ul>
+    {% for key, value in request.items %}
+    <li><h3>ключ: {{ key }}, значение: {{ value }}</h3></li>
+    {% endfor %}
+</ul>
+{% endblock %}
