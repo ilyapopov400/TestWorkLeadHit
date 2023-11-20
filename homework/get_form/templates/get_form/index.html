@@ -5,15 +5,15 @@
 {% block content %}
 <div class="main">
     <h3>заполните форму</h3>
-    <form>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+
         <div class="form">
-            <label for="f_name1">заполните</label>
-            <input type="text" id="f_name1" name="f_name1">
+            {{ field }}
         </div>
-        <div class="form">
-            <label for="f_name2">заполните</label>
-            <input type="text" id="f_name2" name="f_name2">
-        </div>
+        {% endfor %}
+
 
         <div class="form">
             <button type="submit">отправить</button>
@@ -21,16 +21,24 @@
         <div class="form">
             <button type="reset">отменить изменения</button>
         </div>
-
     </form>
 
     <div class="get_form">
+        {% if method == 'GET' %}
         <h3>данные с get запроса</h3>
         <ul>
             {% for key, value in request.items %}
             <li><h3>ключ: {{ key }}, значение: {{ value }}</h3></li>
             {% endfor %}
         </ul>
+        {% elif method == 'POST' %}
+        <h3>данные с post запроса</h3>
+        <ul>
+            {% for key, value in request.items %}
+            <li><h3>ключ: {{ key }}, значение: {{ value }}</h3></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
