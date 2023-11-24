@@ -45,13 +45,13 @@ class Validator:
             try:
                 date1 = datetime.datetime.strptime(field, '%d.%m.%Y')
                 if 'data' not in self.result.keys():
-                    self.result['data'] = date1
+                    self.result['data'] = date1.date()
                     continue
             except ValueError:
                 try:
                     date2 = datetime.datetime.strptime(field, '%Y.%m.%d')
                     if 'data' not in self.result.keys():
-                        self.result['data'] = date2
+                        self.result['data'] = date2.date()
                         continue
                 except ValueError:
                     if 'data' not in self.result.keys():
@@ -81,6 +81,16 @@ class Index(View):
         if form.is_valid():
             valid_date = Validator(list_form=form.cleaned_data.values()).run()
             ic(valid_date)
+            dt = valid_date.get('data')
+            ic(dt)
+
+            result_date_model = models.GetForm(
+                email=valid_date.get('email'),
+                phone=valid_date.get('phone'),
+                date=valid_date.get('data'),
+                text=valid_date.get('text'),
+            )
+            result_date_model.save()
             return HttpResponseRedirect('/get_form/done')
         else:
             ic(form, 'no valid')
