@@ -1,13 +1,11 @@
 from django import forms
 
 
-class EmailForm(forms.Form):
-    email = forms.EmailField()
-
-
-class PhoneForm(forms.Form):
-    phone = forms.CharField()
-
-
-class DateForm(forms.Form):
-    date = forms.DateField()
+class InputForm(forms.Form):
+    '''
+    первоначальный ввод, который необходимо провалидировать
+    '''
+    text_input1 = forms.CharField()
+    text_input2 = forms.CharField()
+    text_input3 = forms.CharField()
+    text_input4 = forms.CharField()

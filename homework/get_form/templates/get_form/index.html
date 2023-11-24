@@ -5,7 +5,7 @@
 {% block content %}
 <div class="main">
     <h3>заполните форму</h3>
-    <form method="post">
+    <form method="post" novalidate>
         {% csrf_token %}
         {% for field in form %}
 
@@ -13,7 +13,6 @@
             {{ field }}
         </div>
         {% endfor %}
-
 
         <div class="form">
             <button type="submit">отправить</button>
@@ -23,22 +22,6 @@
         </div>
     </form>
 
-    <div class="get_form">
-        {% if method == 'GET' %}
-        <h3>данные с get запроса</h3>
-        <ul>
-            {% for key, value in request.items %}
-            <li><h3>ключ: {{ key }}, значение: {{ value }}</h3></li>
-            {% endfor %}
-        </ul>
-        {% elif method == 'POST' %}
-        <h3>данные с post запроса</h3>
-        <ul>
-            {% for key, value in request.items %}
-            <li><h3>ключ: {{ key }}, значение: {{ value }}</h3></li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
+</div>
 </div>
 {% endblock %}
