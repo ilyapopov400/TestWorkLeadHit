@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'get_form/css/getform_base.css' %}">
+{% endblock %}
+
+
+{% block content %}
+{% block content_get_form %} {% endblock %}
+
+<div>
+    <a href="{% url 'get_form-show_model_getform' %}">список заполненных форм</a>
+</div>
+{% endblock %}

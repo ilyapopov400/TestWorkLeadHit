@@ -1,0 +1,39 @@
+{% extends 'get_form/get_form_base.html' %}
+{% load static %}
+
+{% block title %} show form GetForm {% endblock %}
+
+
+{% block content_get_form %}
+<div class="header">
+    <div class="form"><h2>Таблица</h2></div>
+</div>
+
+<div class="main">
+    <div class="form">
+        <table>
+            <caption><h3>Таблица с заполненными формами</h3></caption>
+            <th>
+                <tr>
+                    <th>email</th>
+                    <th>phone</th>
+                    <th>date</th>
+                    <th>text</th>
+                </tr>
+            </th>
+            <tbody>
+            {% for field in fields %}
+            <tr>
+                <div class="form-show">
+                    <td>{{ field.email }}</td>
+                    <td>{{ field.phone }}</td>
+                    <td>{{ field.date }}</td>
+                    <td>{{ field.text }}</td>
+                </div>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -97,6 +97,16 @@ class Index(View):
             return HttpResponseRedirect('/get_form/no_done')
 
 
+class ShowModelGetForm(View):
+    def get(self, request):
+        fields = models.GetForm.objects.all()
+        data = {'fields': fields}
+        result = render(request=request,
+                        template_name='get_form/show_model_getform.html',
+                        context=data)
+        return result
+
+
 def done(request):
     return render(request=request, template_name='get_form/done.html')
 
