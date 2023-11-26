@@ -6,7 +6,7 @@ from django.core.validators import MinLengthValidator, MinValueValidator, MaxVal
 
 
 class GetForm(models.Model):
-    email = models.EmailField(max_length=20)
-    phone = models.CharField(max_length=16)
-    date = models.DateField(max_length=10)
-    text = models.TextField(max_length=100)
+    email = models.EmailField(max_length=20, blank=True, null=True)
+    phone = models.CharField(max_length=16, blank=True, null=True)
+    date = models.DateField(max_length=10, blank=True, null=True)
+    text = models.TextField(max_length=100, blank=True, null=True)

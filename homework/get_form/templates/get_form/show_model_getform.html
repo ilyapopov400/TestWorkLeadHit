@@ -25,10 +25,10 @@
             {% for field in fields %}
             <tr>
                 <div class="form-show">
-                    <td>{{ field.email }}</td>
-                    <td>{{ field.phone }}</td>
-                    <td>{{ field.date }}</td>
-                    <td>{{ field.text }}</td>
+                    <td>{% if field.email %}{{ field.email }} {% else %} не заполнено {% endif %}</td>
+                    <td>{% if field.phone %}{{ field.phone }} {% else %} не заполнено {% endif %}</td>
+                    <td>{% if field.date %}{{ field.date }} {% else %} не заполнено {% endif %}</td>
+                    <td>{% if field.text %}{{ field.text }} {% else %} не заполнено {% endif %}</td>
                 </div>
             </tr>
             {% endfor %}

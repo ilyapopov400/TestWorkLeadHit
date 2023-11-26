@@ -80,9 +80,6 @@ class Index(View):
         form = forms.InputForm(request.POST)
         if form.is_valid():
             valid_date = Validator(list_form=form.cleaned_data.values()).run()
-            ic(valid_date)
-            dt = valid_date.get('data')
-            ic(dt)
 
             result_date_model = models.GetForm(
                 email=valid_date.get('email'),
