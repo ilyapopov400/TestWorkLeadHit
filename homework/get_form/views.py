@@ -23,44 +23,55 @@ class Validator:
     def __init__(self, list_form):
         self.list_form = list_form
         self.result = dict()
-        self.re_email = "^[A-Za-z0-9][A-Za-z0-9\.-_]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]*$"
-        self.re_phone = "^(\+7)[ ](\d{3})[ ](\d{3})[ ](\d{2})[ ](\d{2})$"
+
+    def _validate_email(self, email: str) -> str:
+        re_email = "^[A-Za-z0-9][A-Za-z0-9\.-_]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]*$"
+        if bool(re.fullmatch(re_email, email)):
+            return email
+        return
+
+    def _validate_phone(self, phone: str) -> str:
+        re_phone = "^(\+7)[ ](\d{3})[ ](\d{3})[ ](\d{2})[ ](\d{2})$"
+        if bool(re.fullmatch(re_phone, phone)):
+            return phone
+        return
+
+    def _validate_date(self, date: str) -> datetime:
+        try:
+            date1 = datetime.datetime.strptime(date, '%d.%m.%Y')
+            return date1
+        except ValueError:
+            try:
+                date2 = datetime.datetime.strptime(date, '%Y.%m.%d')
+                return date2
+            except ValueError:
+                return
 
     def _validate(self):
         for field in self.list_form:
             field = field.strip()
 
-            if bool(re.fullmatch(self.re_email, field)):
-                self.result['email'] = field
+            if email := self._validate_email(email=field):
+                self.result['email'] = email
                 continue
             elif 'email' not in self.result.keys():
                 self.result['email'] = None
 
-            if bool(re.fullmatch(self.re_phone, field)):
-                self.result['phone'] = field
+            if phone := self._validate_phone(phone=field):
+                self.result['phone'] = phone
                 continue
             elif 'phone' not in self.result.keys():
                 self.result['phone'] = None
 
-            try:
-                date1 = datetime.datetime.strptime(field, '%d.%m.%Y')
-                if 'data' not in self.result.keys():
-                    self.result['data'] = date1.date()
-                    continue
-            except ValueError:
-                try:
-                    date2 = datetime.datetime.strptime(field, '%Y.%m.%d')
-                    if 'data' not in self.result.keys():
-                        self.result['data'] = date2.date()
-                        continue
-                except ValueError:
-                    if 'data' not in self.result.keys():
-                        self.result['data'] = None
-                        continue
+            if data := self._validate_date(date=field):
+                self.result['data'] = data.date()
+                continue
+            elif 'data' not in self.result.keys():
+                self.result['data'] = None
 
             self.result['text'] = field
 
-    def run(self):
+    def run(self) -> dict:
         self._validate()
         return self.result
 
