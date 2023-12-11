@@ -1,0 +1,27 @@
+{% extends 'get_form/get_form_base.html' %}
+
+{% block title %} get_form {% endblock %}
+
+{% block content_get_form %}
+<div class="main">
+    <h3>заполните форму</h3>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+
+        <div class="form">
+            {{ field }}
+        </div>
+        {% endfor %}
+
+        <div class="form">
+            <button type="submit">отправить</button>
+        </div>
+        <div class="form">
+            <button type="reset">отменить изменения</button>
+        </div>
+    </form>
+
+</div>
+</div>
+{% endblock %}

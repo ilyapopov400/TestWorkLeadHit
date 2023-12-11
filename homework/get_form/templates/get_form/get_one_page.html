@@ -1,0 +1,15 @@
+{% extends 'get_form/get_form_base.html' %}
+
+{% block title %} show one page {% endblock %}
+
+{% block content_get_form %}
+<div class="main">
+    <div class="form">
+        <h2>Информация о заполненой форме {{ getform.id }}</h2>
+        <p> email: {{ getform.email }}</p>
+        <p>phone: {{ getform.phone }}</p>
+        <p>date: {{ getform.date }}</p>
+        <p>text: {{ getform.text }}</p>
+    </div>
+</div>
+{% endblock %}

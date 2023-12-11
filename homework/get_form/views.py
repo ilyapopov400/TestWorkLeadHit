@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View
+from django.views.generic import DetailView
+from django.views.generic.edit import UpdateView
 from . import forms
 from . import models
 from icecream import ic
@@ -77,6 +79,9 @@ class Validator:
 
 
 class Index(View):
+    '''
+    создание записи
+    '''
 
     def get(self, request):
         form = forms.InputForm
@@ -106,6 +111,10 @@ class Index(View):
 
 
 class ShowModelGetForm(View):
+    '''
+    показ всех записей
+    '''
+
     def get(self, request):
         fields = models.GetForm.objects.all()
         data = {'fields': fields}
@@ -113,6 +122,25 @@ class ShowModelGetForm(View):
                         template_name='get_form/show_model_getform.html',
                         context=data)
         return result
+
+
+class ShowOneModelGetForm(DetailView):
+    '''
+    отображение одной записи
+    '''
+    template_name = 'get_form/get_one_page.html'
+    model = models.GetForm
+
+
+class UpdateModelGetForm(UpdateView):
+    '''
+    изменение одной записи
+    '''
+    template_name = 'get_form/update_one_page.html'
+    model = models.GetForm
+    # form_class = forms.InputForm
+    fields = "__all__"
+    success_url = '/get_form/show'
 
 
 def done(request):

@@ -15,20 +15,24 @@
             <caption><h3>Таблица с заполненными формами</h3></caption>
             <th>
                 <tr>
+                    <th>id</th>
                     <th>email</th>
                     <th>phone</th>
                     <th>date</th>
                     <th>text</th>
+                    <th>изменить</th>
                 </tr>
             </th>
             <tbody>
             {% for field in fields %}
             <tr>
                 <div class="form-show">
+                    <td><a href="{% url 'get_one_page' field.id %}">{{ field.id }}</a></td>
                     <td>{% if field.email %}{{ field.email }} {% else %} не заполнено {% endif %}</td>
                     <td>{% if field.phone %}{{ field.phone }} {% else %} не заполнено {% endif %}</td>
                     <td>{% if field.date %}{{ field.date }} {% else %} не заполнено {% endif %}</td>
                     <td>{% if field.text %}{{ field.text }} {% else %} не заполнено {% endif %}</td>
+                    <td><a href="{% url 'update_one_page' field.id %}">изменить</a></td>
                 </div>
             </tr>
             {% endfor %}

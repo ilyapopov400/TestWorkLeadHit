@@ -11,13 +11,15 @@ RUN apt update
 
 WORKDIR app/
 
-COPY . .
+COPY .. .
 
 EXPOSE 8000
 
 RUN pip install -r requirements.txt
 
-RUN python homework/manage.py makemigrations
-RUN python homework/manage.py migrate
+RUN python manage.py makemigrations
+RUN python manage.py migrate
 
-CMD ["python", "homework/manage.py", "runserver", "8000"]
+#CMD ["python3", "homework/manage.py", "runserver", "8000"]
+
+CMD ["gunicorn", "-b",  "127.0.0.1:8000", "homework.wsgi:application"]
