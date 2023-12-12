@@ -4,6 +4,7 @@ import random
 import datetime
 
 from . import views
+from . import models
 
 
 # Create your tests here.
@@ -78,3 +79,42 @@ class TestValidator(unittest.TestCase):
             self.assertEqual(correct_answer.get('phone'), result.get('phone'))
             self.assertEqual(correct_answer.get('email'), result.get('email'))
             self.assertEqual(correct_answer.get('data'), result.get('data'))
+
+
+class TestGetForm(TestCase):
+    @staticmethod
+    def print_info(message):
+        count = models.GetForm.objects.count()
+        print(f"{message}: #all_forms={count}")
+
+    def setUp(self) -> None:
+        print("*" * 40)
+        self.print_info('Start setUp')
+        self.recording_form = models.GetForm.objects.create(email='ilyapopov@mail.ru',
+                                                            phone='+7 999 999 99 99',
+                                                            date='1975-09-30',
+                                                            text='Hello World')
+        self.print_info('Finish setUp')
+
+    def test_creation(self):
+        # Проверка создания объекта GetForm
+        self.print_info('Start test_movie_creation')
+        self.assertEqual(self.recording_form.email, 'ilyapopov@mail.ru')
+        self.assertEqual(self.recording_form.phone, '+7 999 999 99 99')
+        self.assertEqual(self.recording_form.date, '1975-09-30')
+        self.assertEqual(self.recording_form.text, 'Hello World')
+        self.print_info('Finish test_movie_creation')
+
+    def test_get_all_records(self):
+        # Проверка получения всех записей из бд
+        self.print_info('Start test_movie_get_all_records')
+        movies = models.GetForm.objects.all()
+        self.assertEqual(len(movies), 1)
+        self.print_info('Finish test_movie_get_all_records')
+
+    def test_movie_get_record(self):
+        # Проверка получения записи из бд
+        self.print_info('Start test_movie_get_record')
+        mask = models.GetForm.objects.get(email='ilyapopov@mail.ru')
+        self.assertEqual(mask.text, 'Hello World')
+        self.print_info('Finish test_movie_get_record')
